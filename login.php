@@ -12,6 +12,8 @@ if ($conn->connect_error) {
     die("Kapcsolat hiba: " . $conn->connect_error);
 }
 
+$hiba = "";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $jelszo = $_POST['jelszo'];
@@ -22,18 +24,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
 
+        // Jelszó ellenőrzése
         if (password_verify($jelszo, $user['jelszo'])) {
+            // Felhasználói adatok elmentése a munkamenetbe (session)
             $_SESSION['felhasznalonev'] = $user['felhasznalonev'];
             $_SESSION['szerepkor'] = $user['szerepkor'];
-            echo "Sikeres bejelentkezés! Üdv, " . $_SESSION['felhasznalonev'];
+            $_SESSION['id'] = $user['id'];
 
+            // Sikeres bejelentkezés után átirányítás a kezdőoldalra
             header("Location: index.php");
             exit;
         } else {
-            echo "Hibás jelszó!";
+            // Hibás jelszó
+            $hiba = "Hibás jelszó! Kérjük, próbáld újra.";
         }
     } else {
-        echo "Nincs ilyen felhasználó!";
+        // Nem létezik ilyen e-mail cím
+        $hiba = "Nincs ilyen felhasználó ezzel az e-mail címmel!";
     }
 }
 
@@ -51,6 +58,11 @@ $conn->close();
 
 <body>
     <h2>Felhasználói Bejelentkezés</h2>
+    <?php
+    if (!empty($hiba)) {
+        echo "<p style='color:red;'>$hiba</p>";
+    }
+    ?>
     <form action="login.php" method="post">
         <label for="email">E-mail:</label>
         <input type="email" name="email" id="email" required><br><br>
