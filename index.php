@@ -78,31 +78,35 @@ $conn->close();
     </header>
     <div class="container">
         <?php
-        if (isset($_SESSION['felhasznalonev'])) {
+        // Ellenőrizzük, hogy a felhasználó be van-e jelentkezve
+        if (!isset($_SESSION['felhasznalonev'])) {
+            // Bejelentkezés és regisztrációs lehetőség megjelenítése, ha nincs bejelentkezve
+            echo "<h2>Bejelentkezés vagy Regisztráció</h2>";
+            echo "<p>Üdvözöljük az oldalunkon! Kérjük, <a href='login.php'>jelentkezz be</a> vagy <a href='register.php'>regisztrálj</a> a további funkciók eléréséhez.</p>";
+        } else {
+            // Főoldal tartalma megjelenítése, ha a felhasználó be van jelentkezve
             echo "<p>Üdvözöljük, " . $_SESSION['felhasznalonev'] . "!</p>";
             echo "<p><a href='logout.php'>Kijelentkezés</a></p>";
-        } else {
-            echo "<p>Üdvözöljük az oldalunkon! <a href='login.php'>Jelentkezz be</a> a további funkciókhoz.</p>";
+
+            echo "<h2>Bemutatkozás</h2>";
+            echo "<p>Ez az oldal az NB I-es labdarúgóklubok és játékosok részletes adatbázisát tartalmazza. Itt megtekintheti a csapatokat, a játékosokat, és különböző statisztikákat is elérhet.</p>";
+
+            echo "<h3>Mi található az oldalon?</h3>";
+            echo "<ul>";
+            echo "<li><strong>Klubok:</strong> Jelenleg <strong>$klubok_szama</strong> klub adatai találhatók meg az adatbázisban.</li>";
+            echo "<li><strong>Játékosok:</strong> Böngésszen az NB I játékosainak részletes adatai között.</li>";
+            echo "<li><strong>Statisztikák:</strong> Tekintse meg a csapatok és játékosok teljesítménystatisztikáit.</li>";
+            echo "</ul>";
+
+            echo "<h3>Funkciók</h3>";
+            echo "<p>Az oldal különféle funkciókat kínál, például:</p>";
+            echo "<ul>";
+            echo "<li><a href='klubok.php'>Klubok listája</a> - Az NB I-es klubok listájának megtekintése.</li>";
+            echo "<li><a href='jatekosok.php'>Játékosok listája</a> - Az összes játékos adatainak böngészése.</li>";
+            echo "<li><a href='statisztikak.php'>Statisztikák</a> - A legfrissebb statisztikai adatok megtekintése.</li>";
+            echo "</ul>";
         }
         ?>
-
-        <h2>Bemutatkozás</h2>
-        <p>Ez az oldal az NB I-es labdarúgóklubok és játékosok részletes adatbázisát tartalmazza. Itt megtekintheti a csapatokat, a játékosokat, és különböző statisztikákat is elérhet.</p>
-
-        <h3>Mi található az oldalon?</h3>
-        <ul>
-            <li><strong>Klubok:</strong> Jelenleg <strong><?php echo $klubok_szama; ?></strong> klub adatai találhatók meg az adatbázisban.</li>
-            <li><strong>Játékosok:</strong> Böngésszen az NB I játékosainak részletes adatai között.</li>
-            <li><strong>Statisztikák:</strong> Tekintse meg a csapatok és játékosok teljesítménystatisztikáit.</li>
-        </ul>
-
-        <h3>Funkciók</h3>
-        <p>Az oldal különféle funkciókat kínál, például:</p>
-        <ul>
-            <li><a href="klubok.php">Klubok listája</a> - Az NB I-es klubok listájának megtekintése.</li>
-            <li><a href="jatekosok.php">Játékosok listája</a> - Az összes játékos adatainak böngészése.</li>
-            <li><a href="statisztikak.php">Statisztikák</a> - A legfrissebb statisztikai adatok megtekintése.</li>
-        </ul>
     </div>
 </body>
 
