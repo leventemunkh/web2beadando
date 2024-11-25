@@ -1,5 +1,7 @@
 <?php
 session_start();
+$pageTitle = "Index";
+include 'header.php';
 
 // Adatbázis kapcsolat
 $servername = "localhost";
@@ -74,3 +76,4 @@ $conn->close();
 </body>
 
 </html>
+<?php include 'footer.php'; ?>

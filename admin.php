@@ -1,4 +1,9 @@
 <?php
+session_start();
+$pageTitle = "Admin";
+include 'header.php';
+?>
+<?php
 include 'check_role.php';
 
 // Admin szerepkör ellenőrzése
@@ -30,3 +35,5 @@ checkRole('admin');
     </div>
 </body>
 </html>
+
+<?php include 'footer.php'; ?>

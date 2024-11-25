@@ -1,5 +1,8 @@
 <?php
 session_start();
+$pageTitle = "Login";
+include 'header.php';
+
 
 // Adatbázis kapcsolat
 $servername = "localhost";
@@ -83,3 +86,5 @@ $conn->close();
     </div>
 </body>
 </html>
+
+<?php include 'footer.php'; ?>

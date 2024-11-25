@@ -1,5 +1,7 @@
 <?php
 session_start();
+$pageTitle = "Register";
+include 'header.php';
 
 // Adatbázis kapcsolat
 $servername = "localhost";
@@ -61,3 +63,5 @@ $conn->close();
     </div>
 </body>
 </html>
+
+<?php include 'footer.php'; ?>

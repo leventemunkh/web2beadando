@@ -1,4 +1,9 @@
 <?php
+session_start();
+$pageTitle = "Menu";
+include 'header.php';
+?>
+<?php
 // 1. Adatbázis kapcsolat létrehozása
 $servername = "localhost";
 $username = "root";
@@ -48,3 +53,5 @@ renderMenu($menu);
 
 // Kapcsolat bezárása
 $conn->close();
+
+<?php include 'footer.php'; ?>
