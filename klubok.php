@@ -7,26 +7,28 @@ include 'header.php';
 require 'db_connect.php';
 
 // Klubok lekérdezése
-$sql = "SELECT nev, varos FROM klubok";
+$sql = "SELECT id, csapatnev FROM klub";
 $result = $conn->query($sql);
 ?>
 
-<h2>Klubok listája</h2>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Név</th>
-            <th>Város</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php while ($row = $result->fetch_assoc()): ?>
+<div class="container">
+    <h2>Klubok listája</h2>
+    <table class="table">
+        <thead>
             <tr>
-                <td><?php echo htmlspecialchars($row['nev']); ?></td>
-                <td><?php echo htmlspecialchars($row['varos']); ?></td>
+                <th>Azonosító</th>
+                <th>Klub neve</th>
             </tr>
-        <?php endwhile; ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <?php while ($row = $result->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($row['id']); ?></td>
+                    <td><?php echo htmlspecialchars($row['csapatnev']); ?></td>
+                </tr>
+            <?php endwhile; ?>
+        </tbody>
+    </table>
+</div>
 
 <?php include 'footer.php'; ?>

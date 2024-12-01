@@ -6,53 +6,60 @@ include 'header.php';
 // Adatbázis kapcsolat
 require 'db_connect.php';
 
-// Statisztikák lekérdezése
-$sql_klub = "SELECT k.nev AS klub_nev, COUNT(j.id) AS jatekosok_szama 
-             FROM klubok k
-             LEFT JOIN jatekosok j ON k.id = j.klub_id
+// Klub statisztikák
+$sql_klub = "SELECT k.csapatnev, COUNT(l.id) AS jatekosok_szama 
+             FROM klub k
+             LEFT JOIN labdarugo l ON k.id = l.klubid
              GROUP BY k.id";
-$sql_pozicio = "SELECT pozicio, COUNT(*) AS darab FROM jatekosok GROUP BY pozicio";
+
+// Pozíció statisztikák
+$sql_pozicio = "SELECT p.nev AS poszt, COUNT(l.id) AS darab 
+                FROM poszt p
+                LEFT JOIN labdarugo l ON p.id = l.posztid
+                GROUP BY p.id";
 
 $result_klub = $conn->query($sql_klub);
 $result_pozicio = $conn->query($sql_pozicio);
 ?>
 
-<h2>Statisztikák</h2>
+<div class="container">
+    <h2>Statisztikák</h2>
 
-<h3>Játékosok száma klubonként</h3>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Klub</th>
-            <th>Játékosok száma</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php while ($row = $result_klub->fetch_assoc()): ?>
+    <h3>Játékosok száma klubonként</h3>
+    <table class="table">
+        <thead>
             <tr>
-                <td><?php echo htmlspecialchars($row['klub_nev']); ?></td>
-                <td><?php echo htmlspecialchars($row['jatekosok_szama']); ?></td>
+                <th>Klub</th>
+                <th>Játékosok száma</th>
             </tr>
-        <?php endwhile; ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <?php while ($row = $result_klub->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($row['csapatnev']); ?></td>
+                    <td><?php echo htmlspecialchars($row['jatekosok_szama']); ?></td>
+                </tr>
+            <?php endwhile; ?>
+        </tbody>
+    </table>
 
-<h3>Pozíciók eloszlása</h3>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Pozíció</th>
-            <th>Darab</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php while ($row = $result_pozicio->fetch_assoc()): ?>
+    <h3>Pozíciók eloszlása</h3>
+    <table class="table">
+        <thead>
             <tr>
-                <td><?php echo htmlspecialchars($row['pozicio']); ?></td>
-                <td><?php echo htmlspecialchars($row['darab']); ?></td>
+                <th>Pozíció</th>
+                <th>Darab</th>
             </tr>
-        <?php endwhile; ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <?php while ($row = $result_pozicio->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($row['poszt']); ?></td>
+                    <td><?php echo htmlspecialchars($row['darab']); ?></td>
+                </tr>
+            <?php endwhile; ?>
+        </tbody>
+    </table>
+</div>
 
 <?php include 'footer.php'; ?>
